@@ -1,0 +1,52 @@
+{
+  "name": "@axios-extensions/plugins-api",
+  "version": "1.0.0",
+  "description": "Solves the missing priority / add / remove interceptors in Axios",
+  "scripts": {
+    "build": "tsup",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "jwt",
+    "vuejs",
+    "oauth2",
+    "typescript",
+    "react-native",
+    "vue",
+    "reactjs",
+    "axios",
+    "jwt-token",
+    "jwt-authentication",
+    "oauth2-client",
+    "axios-vue",
+    "vue3",
+    "vue3-typescript",
+    "vue3-composition-api",
+    "axios-react",
+    "axios-extensions"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE.md"
+  ],
+  "author": "Sherin Bloemendaal",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "devDependencies": {
+    "@axios-extensions/eslint-config": "*",
+    "@axios-extensions/typescript-config": "*",
+    "@turbo/gen": "^1.12.4",
+    "@types/eslint": "^8.56.5",
+    "@types/node": "^20.11.24",
+    "eslint": "^8.57.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.3"
+  },
+  "dependencies": {
+    "axios": "^1.6.8"
+  }
+}

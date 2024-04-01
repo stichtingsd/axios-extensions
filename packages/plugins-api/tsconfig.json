@@ -1,0 +1,11 @@
+{
+  "extends": "@axios-extensions/typescript-config/main.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": [
+    "src/"
+  ],
+  "exclude": [
+    "node_modules", "dist"]
+}

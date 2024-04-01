@@ -1,0 +1,3 @@
+{
+  "extends": "@axios-extensions/typescript-config/main.json"
+}
