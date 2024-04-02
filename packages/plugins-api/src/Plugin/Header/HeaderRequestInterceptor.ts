@@ -4,7 +4,7 @@ import { InterceptorType } from "../../api";
 
 export function HeaderRequestInterceptor(
   headers: () => Record<string, string>,
-  method: string | undefined,
+  method?: string,
 ): InterceptorConfig<InterceptorType.REQUEST> {
   async function resolved(requestConfig: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> {
     if (method && requestConfig.method !== method) {
