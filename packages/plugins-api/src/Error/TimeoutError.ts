@@ -7,6 +7,7 @@ export default class TimeoutError extends AxiosError {
     super(message);
     this.message = message;
     this.name = "TimeoutError";
+    this.isAxiosError = true;
 
     if ("captureStackTrace" in Error && typeof Error.captureStackTrace === "function") {
       Error.captureStackTrace(this, TimeoutError);

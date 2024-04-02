@@ -16,6 +16,7 @@ export default class ServerError extends AxiosError {
     this.config = config;
     this.request = request;
     this.response = response;
+    this.isAxiosError = true;
 
     if ("captureStackTrace" in Error && typeof Error.captureStackTrace === "function") {
       Error.captureStackTrace(this, ServerError);

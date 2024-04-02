@@ -7,6 +7,7 @@ export default class NetworkError extends AxiosError {
     super(message);
     this.message = message;
     this.name = "NetworkError";
+    this.isAxiosError = true;
 
     if ("captureStackTrace" in Error && typeof Error.captureStackTrace === "function") {
       Error.captureStackTrace(this, NetworkError);
