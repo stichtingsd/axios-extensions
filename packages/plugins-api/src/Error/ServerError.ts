@@ -19,6 +19,8 @@ export default class ServerError extends AxiosError {
 
     if ("captureStackTrace" in Error && typeof Error.captureStackTrace === "function") {
       Error.captureStackTrace(this, ServerError);
+    } else {
+      this.stack = (new Error(message)).stack;
     }
   }
 

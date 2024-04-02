@@ -10,6 +10,8 @@ export default class NetworkError extends AxiosError {
 
     if ("captureStackTrace" in Error && typeof Error.captureStackTrace === "function") {
       Error.captureStackTrace(this, NetworkError);
+    } else {
+      this.stack = (new Error(message)).stack;
     }
   }
 }

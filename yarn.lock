@@ -12,7 +12,7 @@
   resolved "file:packages/eslint-config"
 
 "@axios-extensions/plugins-api@file:/Users/sherinbloemendaal/projects/axios-extensions/packages/plugins-api":
-  version "1.0.1"
+  version "1.0.2"
   resolved "file:packages/plugins-api"
   dependencies:
     axios "^1.6.8"

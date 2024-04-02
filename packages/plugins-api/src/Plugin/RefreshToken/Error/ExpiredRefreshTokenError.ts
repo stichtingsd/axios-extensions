@@ -7,6 +7,8 @@ export default class ExpiredRefreshTokenError extends Error {
 
     if ("captureStackTrace" in Error && typeof Error.captureStackTrace === "function") {
       Error.captureStackTrace(this, ExpiredRefreshTokenError);
+    } else {
+      this.stack = (new Error(message)).stack;
     }
   }
 }
