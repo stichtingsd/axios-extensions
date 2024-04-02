@@ -1,6 +1,6 @@
 {
   "name": "@axios-extensions/plugins-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Solves the missing priority / add / remove interceptors in Axios",
   "scripts": {
     "build": "tsup",
