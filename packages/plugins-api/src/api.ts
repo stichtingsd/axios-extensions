@@ -1,4 +1,4 @@
-import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import type {AxiosError, AxiosInstance, AxiosResponse, CreateAxiosDefaults, InternalAxiosRequestConfig} from "axios";
 import axios from "axios";
 import { BaseUrlRequestInterceptor, ErrorHandlerResponseInterceptor } from "./Plugin";
 
@@ -6,6 +6,7 @@ export interface ApiConfigInterface {
   interceptors: (InterceptorConfig<InterceptorType.REQUEST> | InterceptorConfig<InterceptorType.RESPONSE>)[]
   enableErrorHandler: boolean
   baseURL?: string | (() => string) | undefined
+  axiosConfig?: CreateAxiosDefaults
 }
 
 export enum InterceptorType {
@@ -29,12 +30,17 @@ export interface InterceptorConfig<T extends InterceptorType> {
 const defaultConfig: ApiConfigInterface = {
   enableErrorHandler: true,
   interceptors: [],
+  axiosConfig: {
+    transitional: {
+      clarifyTimeoutError: true,
+    },
+  }
 };
 
 export function createApi(
   config: ApiConfigInterface = defaultConfig,
 ) {
-  const api: AxiosInstance = axios.create();
+  const api: AxiosInstance = axios.create(defaultConfig.axiosConfig);
   const interceptors = [...config.interceptors];
 
   if (config.enableErrorHandler) {

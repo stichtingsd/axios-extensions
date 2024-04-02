@@ -1,9 +1,7 @@
 import type { AxiosError, AxiosResponse } from "axios";
-import NetworkError from "../../Error/NetworkError";
-import ClientError from "../../Error/ClientError";
-import ServerError from "../../Error/ServerError";
 import type { InterceptorConfig } from "../../api";
 import { InterceptorType } from "../../api";
+import {TimeoutError, ServerError, ClientError, NetworkError, AbortedError} from "../../Error";
 
 export function ErrorHandlerResponseInterceptor(): InterceptorConfig<InterceptorType.RESPONSE> {
   function getErrorMessage(response: AxiosResponse, fallback: string): string {
@@ -40,6 +38,12 @@ export function ErrorHandlerResponseInterceptor(): InterceptorConfig<Interceptor
     // Unknown unhandled error.
     if (!error?.config) {
       throw error;
+    }
+    if (error?.code === 'ETIMEDOUT') {
+      throw new TimeoutError();
+    }
+    if (error?.code === 'ECONNABORTED') {
+      throw new AbortedError();
     }
     if (!error?.response) {
       throw new NetworkError();
