@@ -6,7 +6,13 @@ export default class ExpiredRefreshTokenError extends AxiosError {
     super(message);
     this.message = message;
     this.name = "ExpiredRefreshTokenError";
-    this.isAxiosError = true;
+
+    Object.defineProperty(this, "isAxiosError", {
+        value: true,
+        writable: false,
+        enumerable: false,
+        configurable: false
+    })
 
     if ("captureStackTrace" in Error && typeof Error.captureStackTrace === "function") {
       Error.captureStackTrace(this, ExpiredRefreshTokenError);

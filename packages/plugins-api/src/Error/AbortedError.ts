@@ -7,7 +7,13 @@ export default class AbortedError extends AxiosError {
     super(message);
     this.message = message;
     this.name = "AbortedError";
-    this.isAxiosError = true;
+
+    Object.defineProperty(this, "isAxiosError", {
+      value: true,
+      writable: false,
+      enumerable: false,
+      configurable: false
+    })
 
     if ("captureStackTrace" in Error && typeof Error.captureStackTrace === "function") {
       Error.captureStackTrace(this, AbortedError);
