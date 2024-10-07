@@ -3,11 +3,11 @@ import { AxiosError } from "axios";
 export default class NetworkError extends AxiosError {
   constructor(
       message: string = "A network error occurred.",
+      previous?: AxiosError,
   ) {
     super(message);
     this.message = message;
     this.name = "NetworkError";
-
     Object.defineProperty(this, "isAxiosError", {
       value: true,
       writable: false,
@@ -15,10 +15,14 @@ export default class NetworkError extends AxiosError {
       configurable: false
     })
 
-    if ("captureStackTrace" in Error && typeof Error.captureStackTrace === "function") {
-      Error.captureStackTrace(this, NetworkError);
+    if (previous?.stack) {
+      this.stack = previous.stack?.split('\n').slice(0,2).join('\n') + '\n' + previous.stack
     } else {
-      this.stack = (new Error(message)).stack;
+      if ("captureStackTrace" in Error && typeof Error.captureStackTrace === "function") {
+        Error.captureStackTrace(this, NetworkError);
+      } else {
+        this.stack = (new Error(message)).stack;
+      }
     }
   }
 }

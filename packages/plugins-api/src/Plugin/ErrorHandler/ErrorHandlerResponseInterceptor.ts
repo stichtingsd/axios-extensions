@@ -36,23 +36,24 @@ export function ErrorHandlerResponseInterceptor(): InterceptorConfig<Interceptor
 
   async function rejected(error: AxiosError): Promise<AxiosError> {
     // Unknown unhandled error.
+    console.log('got here', error);
     if (!error?.config) {
       throw error;
     }
     if (error?.code === 'ETIMEDOUT') {
-      throw new TimeoutError();
+      throw new TimeoutError("A timeout error occurred." , error);
     }
     if (error?.code === 'ECONNABORTED') {
-      throw new AbortedError();
+      throw new AbortedError("A request was aborted." , error);
     }
     if (!error?.response) {
-      throw new NetworkError();
+      throw new NetworkError("A network error occurred." , error);
     }
     if (error.response.status >= 400 && error.response.status < 500) {
-      throw new ClientError(error.config, error.request, error.response, getErrorMessage(error.response, "base.api.client_error"));
+      throw new ClientError(error.config, error.request, error.response, getErrorMessage(error.response, "base.api.client_error"), "0", error);
     }
     if (error.response.status >= 500 && error.response.status < 600) {
-      throw new ServerError(error.config, error.request, error.response, getErrorMessage(error.response, "base.api.server_error"));
+      throw new ServerError(error.config, error.request, error.response, getErrorMessage(error.response, "base.api.server_error"), "0", error);
     }
 
     throw error;

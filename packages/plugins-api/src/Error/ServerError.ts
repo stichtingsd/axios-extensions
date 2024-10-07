@@ -8,6 +8,7 @@ export default class ServerError extends AxiosError {
     response: AxiosResponse,
     message: string = "A server error occurred.",
     code: string = "0",
+    previous?: AxiosError,
   ) {
     super(message, code, config, request, response);
     this.message = message;
@@ -16,7 +17,6 @@ export default class ServerError extends AxiosError {
     this.config = config;
     this.request = request;
     this.response = response;
-
     Object.defineProperty(this, "isAxiosError", {
       value: true,
       writable: false,
@@ -24,10 +24,14 @@ export default class ServerError extends AxiosError {
       configurable: false
     })
 
-    if ("captureStackTrace" in Error && typeof Error.captureStackTrace === "function") {
-      Error.captureStackTrace(this, ServerError);
+    if (previous?.stack) {
+      this.stack = previous.stack?.split('\n').slice(0,2).join('\n') + '\n' + previous.stack
     } else {
-      this.stack = (new Error(message)).stack;
+      if ("captureStackTrace" in Error && typeof Error.captureStackTrace === "function") {
+        Error.captureStackTrace(this, ServerError);
+      } else {
+        this.stack = (new Error(message)).stack;
+      }
     }
   }
 
