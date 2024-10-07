@@ -6,7 +6,9 @@ export function JwtBearerTokenRequestInterceptor(
   tokenGetter: () => string,
   excludedRoutes: string[] = [],
 ): InterceptorConfig<InterceptorType.REQUEST> {
-  async function resolved(config: InternalAxiosRequestConfig<any>): Promise<InternalAxiosRequestConfig> {
+  async function resolved(
+    config: InternalAxiosRequestConfig<any>,
+  ): Promise<InternalAxiosRequestConfig> {
     if (!config.url) {
       return config;
     }

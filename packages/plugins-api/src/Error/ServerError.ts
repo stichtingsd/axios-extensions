@@ -21,16 +21,22 @@ export default class ServerError extends AxiosError {
       value: true,
       writable: false,
       enumerable: false,
-      configurable: false
-    })
+      configurable: false,
+    });
 
     if (previous?.stack) {
-      this.stack = previous.stack?.split('\n').slice(0,2).join('\n') + '\n' + previous.stack
+      this.stack =
+        previous.stack?.split("\n").slice(0, 2).join("\n") +
+        "\n" +
+        previous.stack;
     } else {
-      if ("captureStackTrace" in Error && typeof Error.captureStackTrace === "function") {
+      if (
+        "captureStackTrace" in Error &&
+        typeof Error.captureStackTrace === "function"
+      ) {
         Error.captureStackTrace(this, ServerError);
       } else {
-        this.stack = (new Error(message)).stack;
+        this.stack = new Error(message).stack;
       }
     }
   }

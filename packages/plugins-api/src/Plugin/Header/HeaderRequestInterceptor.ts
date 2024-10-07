@@ -6,7 +6,9 @@ export function HeaderRequestInterceptor(
   headers: () => Record<string, string>,
   method?: string,
 ): InterceptorConfig<InterceptorType.REQUEST> {
-  async function resolved(requestConfig: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> {
+  async function resolved(
+    requestConfig: InternalAxiosRequestConfig,
+  ): Promise<InternalAxiosRequestConfig> {
     if (method && requestConfig.method !== method) {
       return requestConfig;
     }

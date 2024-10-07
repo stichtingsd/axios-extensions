@@ -5,7 +5,9 @@ import type { InterceptorConfig } from "../../api";
 export function BaseUrlRequestInterceptor(
   baseUrlGetter: () => string,
 ): InterceptorConfig<InterceptorType.REQUEST> {
-  async function resolved(requestConfig: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> {
+  async function resolved(
+    requestConfig: InternalAxiosRequestConfig,
+  ): Promise<InternalAxiosRequestConfig> {
     requestConfig.baseURL = baseUrlGetter();
 
     return requestConfig;

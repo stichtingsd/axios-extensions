@@ -1,4 +1,4 @@
-import {AxiosError} from "axios";
+import { AxiosError } from "axios";
 
 export default class ExpiredRefreshTokenError extends AxiosError {
   constructor() {
@@ -8,16 +8,19 @@ export default class ExpiredRefreshTokenError extends AxiosError {
     this.name = "ExpiredRefreshTokenError";
 
     Object.defineProperty(this, "isAxiosError", {
-        value: true,
-        writable: false,
-        enumerable: false,
-        configurable: false
-    })
+      value: true,
+      writable: false,
+      enumerable: false,
+      configurable: false,
+    });
 
-    if ("captureStackTrace" in Error && typeof Error.captureStackTrace === "function") {
+    if (
+      "captureStackTrace" in Error &&
+      typeof Error.captureStackTrace === "function"
+    ) {
       Error.captureStackTrace(this, ExpiredRefreshTokenError);
     } else {
-      this.stack = (new Error(message)).stack;
+      this.stack = new Error(message).stack;
     }
   }
 }

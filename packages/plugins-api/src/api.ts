@@ -1,12 +1,24 @@
-import type {AxiosError, AxiosInstance, AxiosResponse, CreateAxiosDefaults, InternalAxiosRequestConfig} from "axios";
+import type {
+  AxiosError,
+  AxiosInstance,
+  AxiosResponse,
+  CreateAxiosDefaults,
+  InternalAxiosRequestConfig,
+} from "axios";
 import axios from "axios";
-import { BaseUrlRequestInterceptor, ErrorHandlerResponseInterceptor } from "./Plugin";
+import {
+  BaseUrlRequestInterceptor,
+  ErrorHandlerResponseInterceptor,
+} from "./Plugin";
 
 export interface ApiConfigInterface {
-  interceptors: (InterceptorConfig<InterceptorType.REQUEST> | InterceptorConfig<InterceptorType.RESPONSE>)[]
-  enableErrorHandler: boolean
-  baseURL?: string | (() => string) | undefined
-  axiosConfig?: CreateAxiosDefaults
+  interceptors: (
+    | InterceptorConfig<InterceptorType.REQUEST>
+    | InterceptorConfig<InterceptorType.RESPONSE>
+  )[];
+  enableErrorHandler: boolean;
+  baseURL?: string | (() => string) | undefined;
+  axiosConfig?: CreateAxiosDefaults;
 }
 
 export enum InterceptorType {
@@ -15,16 +27,21 @@ export enum InterceptorType {
 }
 
 export interface InterceptorConfig<T extends InterceptorType> {
-  name?: string
-  type: T
-  priority: number
-  rejected?: (error: AxiosError) => any
+  name?: string;
+  type: T;
+  priority: number;
+  rejected?: (error: AxiosError) => any;
   resolved?: T extends InterceptorType.REQUEST
-    ? (config: InternalAxiosRequestConfig<any>) =>
-      InternalAxiosRequestConfig<any> | Promise<InternalAxiosRequestConfig<any>>
+    ? (
+        config: InternalAxiosRequestConfig<any>,
+      ) =>
+        | InternalAxiosRequestConfig<any>
+        | Promise<InternalAxiosRequestConfig<any>>
     : T extends InterceptorType.RESPONSE
-      ? (config: AxiosResponse<any>) => AxiosResponse<any> | Promise<AxiosResponse<any>>
-      : never
+      ? (
+          config: AxiosResponse<any>,
+        ) => AxiosResponse<any> | Promise<AxiosResponse<any>>
+      : never;
 }
 
 const defaultConfig: ApiConfigInterface = {
@@ -34,12 +51,10 @@ const defaultConfig: ApiConfigInterface = {
     transitional: {
       clarifyTimeoutError: true,
     },
-  }
+  },
 };
 
-export function createApi(
-  config: ApiConfigInterface = defaultConfig,
-) {
+export function createApi(config: ApiConfigInterface = defaultConfig) {
   const api: AxiosInstance = axios.create(defaultConfig.axiosConfig);
   const interceptors = [...config.interceptors];
 
@@ -60,7 +75,9 @@ export function createApi(
   }
 
   function installInterceptor(
-    p: InterceptorConfig<InterceptorType.REQUEST> | InterceptorConfig<InterceptorType.RESPONSE>,
+    p:
+      | InterceptorConfig<InterceptorType.REQUEST>
+      | InterceptorConfig<InterceptorType.RESPONSE>,
   ) {
     interceptors.push(p);
     installInterceptors();
